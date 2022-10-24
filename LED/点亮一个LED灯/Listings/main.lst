@@ -1,0 +1,98 @@
+C51 COMPILER V9.54   MAIN                                                                  10/24/2022 16:14:13 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main.l
+                    -st) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REGX52.h>
+   2          
+   3          void Delayms(unsigned int ms)   //@11.0592MHz
+   4          {
+   5   1          unsigned char i, j;
+   6   1      
+   7   1          while(--ms)
+   8   1          {
+   9   2              i = 2;
+  10   2              j = 199;
+  11   2      
+  12   2              do
+  13   2              {
+  14   3                  while (--j);
+  15   3              }
+  16   2              while (--i);
+  17   2          }
+  18   1      }
+  19          
+  20          
+  21          void main()
+  22          {
+  23   1          int base = 0x1FF;
+  24   1      
+  25   1          int start = 7;
+  26   1          int end = 0;
+  27   1          int point = start;
+  28   1          int add = -1;
+  29   1      
+  30   1          while (1)
+  31   1          {
+  32   2              P2 = base ^ (1 << point);
+  33   2              Delayms(200);
+  34   2      
+  35   2              if ((add < 0 && point - 1 >= end) || (point + 1 <= end))
+  36   2              {
+  37   3                  point += add;
+  38   3      
+  39   3                  continue;
+  40   3              }
+  41   2      
+  42   2              base ^= 1 << point;
+  43   2      
+  44   2              if (base == 0x100)
+  45   2              {
+  46   3                  base = 0x1FF;
+  47   3                  start = 7;
+  48   3                  end = 0;
+  49   3                  point = start;
+  50   3                  add = -1;
+  51   3                  continue;
+  52   3              }
+  53   2      
+  54   2              point = start;
+C51 COMPILER V9.54   MAIN                                                                  10/24/2022 16:14:13 PAGE 2   
+
+  55   2              start = end;
+  56   2              end = point;
+  57   2      
+  58   2              if (add < 0)
+  59   2              {
+  60   3                  add = 1;
+  61   3              }
+  62   2              else
+  63   2              {
+  64   3                  add = -1;
+  65   3              }
+  66   2      
+  67   2              start += add;
+  68   2              point = start;
+  69   2          }
+  70   1      
+  71   1          return;
+  72   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    246    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       6
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
